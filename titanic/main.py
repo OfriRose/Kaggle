@@ -46,13 +46,16 @@ def main():
     train_df = pd.get_dummies(train_df, columns=['Embarked'], prefix='Embarked', drop_first=True)
     test_df = pd.get_dummies(test_df, columns=['Embarked'], prefix='Embarked', drop_first=True)
 
-
     #display_data(train_df=train_df, test_df=test_df)
+
+    #########feature engineering#########
+    train_df['FamilySize'] = train_df['SibSp'] + train_df['Parch'] + 1
+    test_df['FamilySize'] = test_df['SibSp'] + test_df['Parch'] + 1
 
     #########model training#########
 
     #define features and target variable
-    features = ['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked_S', 'Embarked_Q']
+    features = ['Pclass', 'Sex', 'Age', 'FamilySize', 'Fare', 'Embarked_S', 'Embarked_Q']
     target = 'Survived'
     X_train = train_df[features]
     y_train = train_df[target]
